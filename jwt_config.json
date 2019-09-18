@@ -1,0 +1,8 @@
+{
+  "secret": "some-secret-shit-goes-here",
+  "refreshTokenSecret": "some-secret-refresh-token-shit",
+  "port": 3000,
+  "tokenLife": 868686,
+  "refreshTokenLife": 1737372,
+  "salt": "]>ew+K@Z/-BU9rwxO=ZdT8b!ikg)lb!)-R/P)}@p2^x?5;wIGcav^J]7LW_f+%/1MqM7Zp:oWE;uD'rf`%duo!JD1{u^CF:-X<@SUI7|:yV5`Y/'-^sxt58ngvfBbY)vXId!HX|AA=,Rm3uFrt/'Vt$!O=M%9E)DdeX>Hh%c[h/p;Q&0OK6&?`9@@y{`oCj"
+}

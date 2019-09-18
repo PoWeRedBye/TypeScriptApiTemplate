@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "es6", //компилируем в es6, можно использовать es5 для старых версий нода
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "module": "commonjs", //импорт модулей преобразуется в commonjs (node require)
+    "sourceMap": true, //генерировать sourceMaps, нужно для отладки
+    "outDir": "dist", //проект билдится из папки /src в папку /dist
+    "rootDir": "src",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+        "node_modules/*",
+        "src/types/*"
+      ]
+    }
+  },
+  //указывает что включаться должны только файлы из папки /src
+  "include": [
+    "src/**/*"
+  ]
+}
