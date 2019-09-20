@@ -60,23 +60,24 @@ export class UserServiceClass {
   };
 
   updateUser = async (payload: User) => {
-    if (payload) {
-      const { id, login, email, password } = payload;
-      const connection = getConnection();
-      const userRepository = connection.getRepository(User);
-      const passHash = await this.getHash(password);
-      const user = new User();
-      user.login = login;
-      user.password = '';
-      user.passwordHash = passHash;
-      user.email = email;
-      //TODO: {check what is better}
-      //TODO: work =>
-      const newUser = await userRepository.update({ id: 4 }, user);
-      console.log('newUser:  ->');
-      console.log(newUser);
-      //TODO: work =>
-      /*const newUser = connection
+    try {
+      if (payload) {
+        const { id, login, email, password } = payload;
+        const connection = getConnection();
+        const userRepository = connection.getRepository(User);
+        const passHash = await this.getHash(password);
+        const user = new User();
+        user.login = login;
+        user.password = '';
+        user.passwordHash = passHash;
+        user.email = email;
+        //TODO: {check what is better}
+        //TODO: work =>
+        const newUser = await userRepository.update({ id: id }, user);
+        console.log('newUser:  ->');
+        console.log(newUser);
+        //TODO: work =>
+        /*const newUser = connection
         .createQueryBuilder()
         .update(User)
         .set({
@@ -88,9 +89,10 @@ export class UserServiceClass {
         .where('id = :id', { id: id })
         .execute();*/
 
-      return newUser;
-    } else {
-      return false;
+        return newUser;
+      }
+    } catch (error) {
+      console.log('error', error);
     }
   };
 
@@ -106,7 +108,7 @@ export class UserServiceClass {
       newUser.email = user.email;
       newUser.password = newpassword;
       const updated = await this.updateUser(newUser);
-      if (updated != null || false) {
+      if (updated.raw.changedRows == 1) {
         const generatedToken = await AuthService.createToken(
           newUser.id,
           newUser.login,

@@ -24,6 +24,7 @@ class UserApiClass {
         resolve({
           result: true,
           payload: result,
+          code: 200,
           message: 'this user have only a watch permissions!!!',
         });
       } catch (error) {
@@ -40,6 +41,7 @@ class UserApiClass {
           resolve({
             result: true,
             payload: result,
+            code: 200,
             tokendata: decoded,
             message: 'successful',
           });
@@ -61,6 +63,7 @@ class UserApiClass {
         if (result != null) {
           resolve({
             result: true,
+            code: 200,
             payload: result,
             message: 'you change your password',
           });

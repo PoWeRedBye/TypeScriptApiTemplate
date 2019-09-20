@@ -44,6 +44,7 @@ router.post('/user/change-password', async ctx => {
       password: ctx.request.body.password,
       newpassword: ctx.request.body.newpassword,
     });
+    ctx.body = result;
   } catch (error) {
     console.error('error', error);
     ctx.status = error.code;
