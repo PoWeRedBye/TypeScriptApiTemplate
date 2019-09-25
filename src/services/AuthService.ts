@@ -4,6 +4,7 @@ import AuthCallback from '../models/classes/auth_callback';
 import { Auth_model } from '../models/interfaces/auth_model';
 import bcrypt from 'bcrypt';
 import { Auth_user_callback_model } from '../models/interfaces/auth_user_callback_model';
+import {Tokendata} from '../models/interfaces/tokendata';
 
 export class AuthServiceClass {
   userAuth = async (payload: Auth_model): Promise<Auth_user_callback_model> => {
@@ -16,10 +17,7 @@ export class AuthServiceClass {
       //TODO {check this} !== with checkPassword = false, enter in if!!!! and i have TypeError exception in token field!!!
       if (checkPassword != false) {
         const generatedToken = await this.createToken(user.id, user.login, user.email);
-        const callback = new AuthCallback();
-        callback.username = user.login;
-        callback.email = user.email;
-        callback.token = generatedToken;
+        const callback = new AuthCallback(user.login, user.email, generatedToken);
         return callback;
       }
     } else {
@@ -34,7 +32,7 @@ export class AuthServiceClass {
     return bcrypt.compare(password, hash);
   };
 
-  createToken = async (id: number, username: string, email: string) => {
+  createToken = (id: number, username: string, email: string) => {
     const expiresIn = 868686;
     const secretOrKey = 'my_auth_react-api-jwt-secret';
     const user = { id, username, email };
@@ -43,10 +41,10 @@ export class AuthServiceClass {
     return token;
   };
 
-  getCurrentTimestamp = async () => Math.round(new Date().getTime() / 1000);
+  getCurrentTimestamp = () => Math.round(new Date().getTime() / 1000);
 
-  decodeToken = async (token: string) => {
-    return jwt.decode(token);
+  decodeToken = (token: string) => {
+    return jwt.decode(token) as Tokendata;
   };
 
   checkAuth = async (token: string): Promise<boolean> => {
