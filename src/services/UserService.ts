@@ -114,10 +114,7 @@ export class UserServiceClass {
           newUser.login,
           newUser.email,
         );
-        const callback = new AuthCallback();
-        callback.username = user.login;
-        callback.email = user.email;
-        callback.token = generatedToken;
+        const callback = new AuthCallback(user.login, user.email, generatedToken);
         return callback;
       } else {
         return null;

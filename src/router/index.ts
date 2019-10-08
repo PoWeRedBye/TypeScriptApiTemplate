@@ -1,5 +1,6 @@
 import KoaRouter from 'koa-router';
 import { UserApi } from '../api/UserApi';
+import { AuthService} from '../services/AuthService';
 
 const router = new KoaRouter();
 
@@ -23,7 +24,7 @@ router.post('/user/create', async ctx => {
   }
 });
 
-router.post('/user/login', async ctx => {
+router.post('/user/login', AuthService.authorizationMiddleware, async ctx => {
   try {
     const result = await UserApi.authtenticate({
       login: ctx.request.body.login,
@@ -37,7 +38,7 @@ router.post('/user/login', async ctx => {
   }
 });
 
-router.post('/user/change-password', async ctx => {
+router.post('/user/change-password', AuthService.authorizationMiddleware, async ctx => {
   try {
     const result = await UserApi.changePassword({
       login: ctx.request.body.login,

@@ -25,6 +25,43 @@ export class AuthServiceClass {
     }
   };
 
+
+
+  authorizationMiddleware = async (ctx: any, next: any) => {
+    const publicURLs = [
+      '/user/login',
+      '/user/registration',
+      '/user/forgot-password',
+      '/user/refreshAuthData',
+    ];
+    console.clear();
+    console.log("-----".repeat(50));
+    console.log(ctx.request.header.token);
+    console.log(publicURLs.includes(ctx.request.url));
+    console.log(ctx.request.url.indexOf('/user/reset-password/') === 0);
+
+    // TODO: rewrite using regex to avoid '/user/reset-password/{key}/a/b/c/...' cases
+    if (
+      ctx.request.url.indexOf('/user/reset-password/') === 0
+    // || publicURLs.includes(ctx.request.url)
+    // || await auth.checkAuth(ctx.request.header.token)
+    ) {
+      return next();
+    }
+
+    if (publicURLs.includes(ctx.request.url)) {
+      return next();
+    }
+
+    // check token
+    if (await this.checkAuth(ctx.request.header.token)) {
+      return next();
+    }
+
+    return ctx.status = 401;
+    // return 401
+  };
+
   compareHash = async (
     password: string | undefined,
     hash: string | undefined,

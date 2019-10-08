@@ -8,13 +8,16 @@
     "build": "tsc",
     "dev": "concurrently \"npm:watch-*\"",
     "watch-ts": "tsc -w",
-    "watch-node": "nodemon dist/index.js"
+    "watch-node": "nodemon dist/index.js",
+    "test": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/dotenv": "6.1.1",
     "@types/bcrypt": "3.0.0",
     "@types/jest": "24.0.18",
     "@types/jsonwebtoken": "8.3.3",
@@ -28,13 +31,14 @@
     "jest": "24.9.0",
     "nodemon": "1.19.1",
     "prettier": "1.18.2",
-    "supertest": "^4.0.2",
+    "supertest": "4.0.2",
     "ts-jest": "24.1.0",
     "ts-node": "8.3.0",
     "typescript": "3.6.2"
   },
   "dependencies": {
     "bcrypt": "3.0.6",
+    "dotenv": "8.1.0",
     "jsonwebtoken": "8.5.1",
     "koa": "2.8.1",
     "koa-body": "4.1.1",
