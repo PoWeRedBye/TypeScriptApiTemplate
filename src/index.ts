@@ -2,10 +2,10 @@ import Koa from 'koa';
 import KoaBody from 'koa-body';
 import mount from 'koa-mount';
 import serve from 'koa-static';
+import dotenv from 'dotenv';
 import { Connection, ConnectionOptions, createConnection } from 'typeorm';
 import { Router } from './router';
 import { User } from './db/entities/user';
-import dotenv from 'dotenv';
 
 const app = new Koa();
 
@@ -22,6 +22,7 @@ const options: ConnectionOptions = {
 };
 
 const myConnection = (connection: Connection) => {
+  //TODO: {new db entities} add new database repository here!!!
   connection.getRepository(User);
   app.use(KoaBody({ multipart: true }));
   app.use(mount("/file", serve("./file")));

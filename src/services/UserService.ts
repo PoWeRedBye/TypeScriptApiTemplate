@@ -4,7 +4,7 @@ import { getConnection } from 'typeorm';
 import bcrypt from 'bcrypt';
 import auth_callback from '../models/classes/auth_callback';
 import AuthCallback from '../models/classes/auth_callback';
-import { AuthService } from './AuthService';
+import {Utils} from './Utils';
 import { update_pass_model } from '../models/interfaces/update_pass_model';
 
 //TODO: fix memory spaces in this code=)
@@ -100,7 +100,7 @@ export class UserServiceClass {
     const { login, password, newpassword } = payload;
     const user = await this.getUserByLogin(login);
     console.log();
-    const checkPass = AuthService.compareHash(password, user.passwordHash);
+    const checkPass = Utils.compareHash(password, user.passwordHash);
     if (checkPass) {
       const newUser = new User();
       newUser.id = user.id;
@@ -109,7 +109,7 @@ export class UserServiceClass {
       newUser.password = newpassword;
       const updated = await this.updateUser(newUser);
       if (updated.raw.changedRows == 1) {
-        const generatedToken = await AuthService.createToken(
+        const generatedToken = await Utils.createToken(
           newUser.id,
           newUser.login,
           newUser.email,
@@ -124,5 +124,4 @@ export class UserServiceClass {
     }
   };
 }
-
 export const UserService = new UserServiceClass();
